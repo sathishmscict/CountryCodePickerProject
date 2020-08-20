@@ -122,6 +122,7 @@ public class CountryCodePicker extends RelativeLayout {
     String lastCheckedAreaCode = null;
     int lastCursorPosition = 0;
     boolean countryChangedDueToAreaCode = false;
+    boolean showBottomSheetPicker =false;
     private OnCountryChangeListener onCountryChangeListener;
     private PhoneNumberValidityChangeListener phoneNumberValidityChangeListener;
     private FailureListener failureListener;
@@ -132,22 +133,33 @@ public class CountryCodePicker extends RelativeLayout {
     private int fastScrollerBubbleTextAppearance = 0;
     private CCPCountryGroup currentCountryGroup;
     private View.OnClickListener customClickListener;
+    //Added by sathish
+    private CppClickListener cppClickListeners;
     View.OnClickListener countryCodeHolderClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (customClickListener == null) {
-                if (isCcpClickable()) {
-                    if (ccpDialogInitialScrollToSelection) {
-                        launchCountrySelectionDialog(getSelectedCountryNameCode());
-                    } else {
-                        launchCountrySelectionDialog();
+
+            if(showBottomSheetPicker){
+                cppClickListeners.openBottomSheet();
+            }else{
+                if (customClickListener == null) {
+                    if (isCcpClickable()) {
+                        if (ccpDialogInitialScrollToSelection) {
+                            launchCountrySelectionDialog(getSelectedCountryNameCode());
+                        } else {
+                            launchCountrySelectionDialog();
+                        }
                     }
+                } else {
+                    customClickListener.onClick(v);
                 }
-            } else {
-                customClickListener.onClick(v);
             }
+
+
+
         }
     };
+
 
     public CountryCodePicker(Context context) {
         super(context);
@@ -282,6 +294,9 @@ public class CountryCodePicker extends RelativeLayout {
 
             //detect country from area code
             detectCountryWithAreaCode = a.getBoolean(R.styleable.CountryCodePicker_ccp_areaCodeDetectedCountry, true);
+
+            //show bottom sheet
+            showBottomSheetPicker = a.getBoolean(R.styleable.CountryCodePicker_ccp_show_bottom_sheet_picker, true);
 
             //remember last selection
             rememberLastSelection = a.getBoolean(R.styleable.CountryCodePicker_ccp_rememberLastSelection, false);
@@ -817,9 +832,9 @@ public class CountryCodePicker extends RelativeLayout {
         // adds name code if required
         if (showNameCode) {
             if (showFullName) {
-                displayText += " (" + selectedCCPCountry.getNameCode().toUpperCase() + ")";
+                //displayText += " (" + selectedCCPCountry.getNameCode().toUpperCase() + ")";
             } else {
-                displayText += " " + selectedCCPCountry.getNameCode().toUpperCase();
+                // displayText += " " + selectedCCPCountry.getNameCode().toUpperCase();
             }
         }
 
@@ -940,7 +955,6 @@ public class CountryCodePicker extends RelativeLayout {
             case VOICEMAIL:
                 return PhoneNumberUtil.PhoneNumberType.VOICEMAIL;
             case UNKNOWN:
-
                 return PhoneNumberUtil.PhoneNumberType.UNKNOWN;
             default:
                 return PhoneNumberUtil.PhoneNumberType.MOBILE;
@@ -2314,7 +2328,7 @@ public class CountryCodePicker extends RelativeLayout {
         this.selectedAutoDetectionPref = selectedAutoDetectionPref;
     }
 
-    protected void onUserTappedCountry(CCPCountry CCPCountry) {
+    public void onUserTappedCountry(CCPCountry CCPCountry) {
         if (codePicker.rememberLastSelection) {
             codePicker.storeSelectedCountryNameCode(CCPCountry.getNameCode());
         }
@@ -2369,6 +2383,11 @@ public class CountryCodePicker extends RelativeLayout {
         CountryCodeDialog.clear();
         super.onDetachedFromWindow();
     }
+
+    public void setCppClickListeners(CppClickListener cppClickListeners) {
+        this.cppClickListeners = cppClickListeners;
+    }
+
 
     /**
      * Update every time new language is supported #languageSupport

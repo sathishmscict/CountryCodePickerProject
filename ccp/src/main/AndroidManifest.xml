@@ -1,1 +1,4 @@
-<manifest package="com.hbb20"/>
+<manifest package="com.hbb20"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+</manifest>

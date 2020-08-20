@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/design_bottom_sheet"
+    style="?attr/bottomSheetStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_horizontal|top"
+    android:fitsSystemWindows="true"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <LinearLayout
+        android:id="@+id/rootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="0dp">
+        <!--app:behavior_hideable="false"
+        app:behavior_peekHeight="500dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
+
+        <RelativeLayout
+            android:id="@+id/rl_query_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_title"
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/search_background"
+                android:padding="4dp">
+
+                <ImageView
+                    android:id="@+id/img_search"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:padding="4dp"
+                    app:srcCompat="@drawable/icon_search" />
+
+                <EditText
+                    android:id="@+id/editText_search"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/img_search"
+                    android:background="@null"
+                    android:drawablePadding="8dp"
+                    android:focusable="true"
+                    android:gravity="center|left"
+                    android:imeOptions="actionSearch"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textCursorDrawable="@null" />
+
+                <ImageView
+                    android:id="@+id/img_clear_query"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/close_settings"
+                    android:visibility="invisible" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/textView_noresult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rl_query_holder"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:text="@string/no_result_found"
+            android:textColor="@android:color/primary_text_light"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/rlContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_countryDialog"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerHeight="2dp" />
+
+            <com.futuremind.recyclerviewfastscroll.FastScroller
+                android:id="@+id/fastscroll"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignTop="@+id/recycler_countryDialog"
+                android:layout_alignEnd="@+id/recycler_countryDialog"
+                android:layout_alignRight="@+id/recycler_countryDialog"
+                android:layout_alignBottom="@+id/recycler_countryDialog"
+                android:orientation="vertical" />
+        </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>
+
+
+
+
+

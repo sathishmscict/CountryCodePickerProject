@@ -2,4 +2,8 @@
 <resources>
     <dimen name="google_1x">8dp</dimen>
     <dimen name="ccp_padding">8dp</dimen>
+    <dimen name="roundedBottomSheetCornerRadius">16dp</dimen>
+    <dimen name="roundedBottomSheetCornerRadiusTopPadding">8dp</dimen>
+    <dimen name="roundedBottomSheetCornerRadiusLeftPadding">8dp</dimen>
+    <dimen name="roundedBottomSheetCornerRadiusRightPadding">8dp</dimen>
 </resources>

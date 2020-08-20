@@ -244,6 +244,7 @@ public class CCPCountry implements Comparable<CCPCountry> {
         }
     }
 
+
     /**
      * Search a country which matches @param nameCode.
      *
@@ -1417,12 +1418,13 @@ public class CCPCountry implements Comparable<CCPCountry> {
 
     public static List<CCPCountry> getLibraryMasterCountriesEnglish() {
         List<CCPCountry> countries = new ArrayList<>();
+        countries.add(new CCPCountry("ax", "358", "Aland Islands", DEFAULT_FLAG_RES));
+        countries.add(new CCPCountry("al", "355", "Albania", DEFAULT_FLAG_RES));
+        countries.add(new CCPCountry("dz", "213", "Algeria", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("ad", "376", "Andorra", DEFAULT_FLAG_RES));
-        countries.add(new CCPCountry("ae", "971", "United Arab Emirates (UAE)", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("af", "93", "Afghanistan", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("ag", "1", "Antigua and Barbuda", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("ai", "1", "Anguilla", DEFAULT_FLAG_RES));
-        countries.add(new CCPCountry("al", "355", "Albania", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("am", "374", "Armenia", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("ao", "244", "Angola", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("aq", "672", "Antarctica", DEFAULT_FLAG_RES));
@@ -1431,7 +1433,6 @@ public class CCPCountry implements Comparable<CCPCountry> {
         countries.add(new CCPCountry("at", "43", "Austria", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("au", "61", "Australia", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("aw", "297", "Aruba", DEFAULT_FLAG_RES));
-        countries.add(new CCPCountry("ax", "358", "Åland Islands", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("az", "994", "Azerbaijan", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("ba", "387", "Bosnia And Herzegovina", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("bb", "1", "Barbados", DEFAULT_FLAG_RES));
@@ -1476,7 +1477,6 @@ public class CCPCountry implements Comparable<CCPCountry> {
         countries.add(new CCPCountry("dk", "45", "Denmark", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("dm", "1", "Dominica", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("do", "1", "Dominican Republic", DEFAULT_FLAG_RES));
-        countries.add(new CCPCountry("dz", "213", "Algeria", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("ec", "593", "Ecuador", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("ee", "372", "Estonia", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("eg", "20", "Egypt", DEFAULT_FLAG_RES));
@@ -1641,6 +1641,7 @@ public class CCPCountry implements Comparable<CCPCountry> {
         countries.add(new CCPCountry("ua", "380", "Ukraine", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("ug", "256", "Uganda", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("us", "1", "United States", DEFAULT_FLAG_RES));
+        countries.add(new CCPCountry("ae", "971", "United Arab Emirates (UAE)", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("uy", "598", "Uruguay", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("uz", "998", "Uzbekistan", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("va", "379", "Holy See (vatican City State)", DEFAULT_FLAG_RES));
@@ -1722,7 +1723,7 @@ public class CCPCountry implements Comparable<CCPCountry> {
         query = query.toLowerCase();
         return containsQueryWord("Name", getName(), query) ||
                 containsQueryWord("NameCode", getNameCode(), query) ||
-                containsQueryWord("PhoneCode", getPhoneCode(), query) ||
+                /*containsQueryWord("PhoneCode", getPhoneCode(), query) ||*/
                 containsQueryWord("EnglishName", getEnglishName(), query);
     }
 
@@ -1731,7 +1732,13 @@ public class CCPCountry implements Comparable<CCPCountry> {
             if (fieldValue == null || query == null) {
                 return false;
             } else {
-                return fieldValue.toLowerCase(Locale.ROOT).contains(query);
+                if(query.isEmpty()){
+                    return fieldValue.toLowerCase(Locale.ROOT).contains(query);
+                }else{
+                    //return fieldValue.toLowerCase(Locale.ROOT).contains(query);
+                    return fieldValue.toLowerCase(Locale.ROOT).startsWith(query);
+                }
+
             }
         } catch (Exception e) {
             Log.w("CCPCountry", fieldName + ":" + fieldValue +

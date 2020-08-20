@@ -4,4 +4,7 @@
     <color name="defaultContentColor">@android:color/black</color>
     <color name="defaultBorderFlagColor">@android:color/transparent</color>
     <color name="pressed_bg">#64b7b7b7</color>
+    <color name="colorBlue">#007aff</color>
+    <color name="colorGrey">#ececed</color>
+    <color name="colorWhite">#ffffff</color>
 </resources>

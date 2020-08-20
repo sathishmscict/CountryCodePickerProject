@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,7 +23,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.futuremind.recyclerviewfastscroll.FastScroller;
-
 import java.lang.reflect.Field;
 import java.util.List;
 
@@ -73,8 +73,7 @@ class CountryCodeDialog {
         openCountryCodeDialog(codePicker, null);
     }
 
-    public static void
-    openCountryCodeDialog(final CountryCodePicker codePicker, final String countryNameCode) {
+    public static void openCountryCodeDialog(final CountryCodePicker codePicker, final String countryNameCode) {
         context = codePicker.getContext();
         dialog = new Dialog(context);
         codePicker.refreshCustomMasterList();
@@ -82,6 +81,13 @@ class CountryCodeDialog {
         List<CCPCountry> masterCountries = CCPCountry.getCustomMasterCountryList(context, codePicker);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setContentView(R.layout.layout_picker_dialog);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.show();
+        dialog.getWindow().setAttributes(lp);
 
         //keyboard
         if (codePicker.isSearchAllowed() && codePicker.isDialogKeyboardAutoPopup()) {

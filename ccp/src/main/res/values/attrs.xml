@@ -55,6 +55,7 @@
         <attr name="ccp_hintExampleNumber" format="boolean" />
         <attr name="ccp_rememberLastSelection" format="boolean" />
         <attr name="ccp_showArrow" format="boolean" />
+        <attr name="ccp_show_bottom_sheet_picker" format="boolean"/>
 
         <!--CCP Dialog properties-->
         <attr name="ccpDialog_keyboardAutoPopup" format="boolean" />

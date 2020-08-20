@@ -2,7 +2,6 @@ package com.hbb20;
 
 import android.app.Dialog;
 import android.content.Context;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -16,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 
@@ -25,33 +27,23 @@ import java.util.List;
 /**
  * Created by hbb20 on 11/1/16.
  */
-class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.CountryCodeViewHolder> implements SectionTitleProvider {
+class CountryCodeAdapterNew extends RecyclerView.Adapter<CountryCodeAdapterNew.CountryCodeViewHolder> implements SectionTitleProvider {
     List<CCPCountry> filteredCountries = null, masterCountries = null;
-    TextView textView_noResult;
-    CountryCodePicker codePicker;
     LayoutInflater inflater;
-    EditText editText_search;
-    Dialog dialog;
     Context context;
-    RelativeLayout rlQueryHolder;
-    ImageView imgClearQuery;
     int preferredCountriesCount = 0;
+    CountrySearchListener countrySearchListener;
 
-    CountryCodeAdapter(Context context, List<CCPCountry> countries, CountryCodePicker codePicker, RelativeLayout rlQueryHolder, final EditText editText_search, TextView textView_noResult, Dialog dialog, ImageView imgClearQuery) {
+    CountryCodeAdapterNew(Context context,CountrySearchListener _countrySearchListener, List<CCPCountry> countries) {
         this.context = context;
         this.masterCountries = countries;
-        this.codePicker = codePicker;
-        this.dialog = dialog;
-        this.textView_noResult = textView_noResult;
-        this.editText_search = editText_search;
-        this.rlQueryHolder = rlQueryHolder;
-        this.imgClearQuery = imgClearQuery;
         this.inflater = LayoutInflater.from(context);
         this.filteredCountries = getFilteredCountries("");
-        setSearchBar();
+        this.countrySearchListener = _countrySearchListener;
+        /*setSearchBar();*/
     }
 
-    private void setSearchBar() {
+   /* private void setSearchBar() {
         if (codePicker.isSearchAllowed()) {
             imgClearQuery.setVisibility(View.GONE);
             setTextWatcher();
@@ -59,21 +51,21 @@ class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.Country
         } else {
             rlQueryHolder.setVisibility(View.GONE);
         }
-    }
+    }*/
 
-    private void setQueryClearListener() {
+   /* private void setQueryClearListener() {
         imgClearQuery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editText_search.setText("");
             }
         });
-    }
+    }*/
 
     /**
      * add textChangeListener, to apply new query each time editText get text changed.
      */
-    private void setTextWatcher() {
+/*    private void setTextWatcher() {
         if (this.editText_search != null) {
             this.editText_search.addTextChangedListener(new TextWatcher() {
 
@@ -109,7 +101,7 @@ class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.Country
                 }
             });
         }
-    }
+    }*/
 
     /**
      * Filter country list for given keyWord / query.
@@ -117,10 +109,11 @@ class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.Country
      *
      * @param query : text to match against country name, name code or phone code
      */
-    private void applyQuery(String query) {
+    public void applyQuery(String query) {
 
 
-        textView_noResult.setVisibility(View.GONE);
+        //textView_noResult.setVisibility(View.GONE);
+
         query = query.toLowerCase();
 
         //if query started from "+" ignore it
@@ -130,8 +123,10 @@ class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.Country
 
         filteredCountries = getFilteredCountries(query);
 
-        if (filteredCountries.isEmpty()) {
-            textView_noResult.setVisibility(View.VISIBLE);
+        if (filteredCountries.size() == 0) {
+            countrySearchListener.noSearchResult();
+        }else{
+            countrySearchListener.showCountryContainer();
         }
         notifyDataSetChanged();
     }
@@ -139,21 +134,6 @@ class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.Country
     private List<CCPCountry> getFilteredCountries(String query) {
         List<CCPCountry> tempCCPCountryList = new ArrayList<CCPCountry>();
         preferredCountriesCount = 0;
-        if (codePicker.preferredCountries != null && codePicker.preferredCountries.size() > 0) {
-            for (CCPCountry CCPCountry : codePicker.preferredCountries) {
-                if (CCPCountry.isEligibleForQuery(query)) {
-                    tempCCPCountryList.add(CCPCountry);
-                    preferredCountriesCount++;
-                }
-            }
-
-            if (tempCCPCountryList.size() > 0) { //means at least one preferred country is added.
-                CCPCountry divider = null;
-                tempCCPCountryList.add(divider);
-                preferredCountriesCount++;
-            }
-        }
-
         for (CCPCountry CCPCountry : masterCountries) {
             if (CCPCountry.isEligibleForQuery(query)) {
                 tempCCPCountryList.add(CCPCountry);
@@ -177,12 +157,17 @@ class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.Country
                 @Override
                 public void onClick(View view) {
                     if (filteredCountries != null && filteredCountries.size() > i) {
-                        codePicker.onUserTappedCountry(filteredCountries.get(i));
+                        //Toast.makeText(context,"Clicked on ",Toast.LENGTH_SHORT).show();
+                        //TODO ; need to add callback pass data to activity
+                        //codePicker.onUserTappedCountry(filteredCountries.get(i));
+                        countrySearchListener.showCountryContainer(filteredCountries.get(i));
                     }
                     if (view != null && filteredCountries != null && filteredCountries.size() > i && filteredCountries.get(i) != null) {
                         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                        dialog.dismiss();
+                        //Toast.makeText(context,"Clicked on dismiss",Toast.LENGTH_SHORT).show();
+                        //TODO ; need to add callback dismiss dialogsheet
+                        //dialog.dismiss();
                     }
                 }
             });
@@ -225,25 +210,12 @@ class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.Country
             linearFlagHolder = (LinearLayout) relativeLayout_main.findViewById(R.id.linear_flag_holder);
             divider = relativeLayout_main.findViewById(R.id.preferenceDivider);
 
-            if (codePicker.getDialogTextColor() != 0) {
+          /*  if (codePicker.getDialogTextColor() != 0) {
                 textView_name.setTextColor(codePicker.getDialogTextColor());
                 textView_code.setTextColor(codePicker.getDialogTextColor());
                 divider.setBackgroundColor(codePicker.getDialogTextColor());
-            }
+            }*/
 
-            try {
-                if (codePicker.getDialogTypeFace() != null) {
-                    if (codePicker.getDialogTypeFaceStyle() != CountryCodePicker.DEFAULT_UNSET) {
-                        textView_code.setTypeface(codePicker.getDialogTypeFace(), codePicker.getDialogTypeFaceStyle());
-                        textView_name.setTypeface(codePicker.getDialogTypeFace(), codePicker.getDialogTypeFaceStyle());
-                    } else {
-                        textView_code.setTypeface(codePicker.getDialogTypeFace());
-                        textView_name.setTypeface(codePicker.getDialogTypeFace());
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
 
         public void setCountry(CCPCountry ccpCountry) {
@@ -251,34 +223,30 @@ class CountryCodeAdapter extends RecyclerView.Adapter<CountryCodeAdapter.Country
                 divider.setVisibility(View.GONE);
                 textView_name.setVisibility(View.VISIBLE);
                 textView_code.setVisibility(View.VISIBLE);
-                if (codePicker.isCcpDialogShowPhoneCode()) {
-                    textView_code.setVisibility(View.VISIBLE);
-                } else {
-                    textView_code.setVisibility(View.GONE);
-                }
-
                 String countryName = "";
 
-                if (codePicker.getCcpDialogShowFlag() && codePicker.ccpUseEmoji) {
+                /*if (codePicker.getCcpDialogShowFlag() && codePicker.ccpUseEmoji) {
                     //extra space is just for alignment purpose
                     countryName += CCPCountry.getFlagEmoji(ccpCountry) + "   ";
-                }
+                }*/
 
                 countryName += ccpCountry.getName();
 
-                if (codePicker.getCcpDialogShowNameCode()) {
-                    countryName += " (" + ccpCountry.getNameCode().toUpperCase() + ")";
-                }
+                /*if (codePicker.getCcpDialogShowNameCode()) {*/
+                   // countryName += " (" + ccpCountry.getNameCode().toUpperCase() + ")";
+                /*}*/
 
                 textView_name.setText(countryName);
                 textView_code.setText("+" + ccpCountry.getPhoneCode());
 
-                if (!codePicker.getCcpDialogShowFlag() || codePicker.ccpUseEmoji) {
-                    linearFlagHolder.setVisibility(View.GONE);
-                } else {
+                /*if (!codePicker.getCcpDialogShowFlag() || codePicker.ccpUseEmoji) {*/
+                    //linearFlagHolder.setVisibility(View.GONE);
+                /*} else {
                     linearFlagHolder.setVisibility(View.VISIBLE);
                     imageViewFlag.setImageResource(ccpCountry.getFlagID());
-                }
+                }*/
+                imageViewFlag.setImageResource(ccpCountry.getFlagID());
+                imageViewFlag.setVisibility(View.VISIBLE);
             } else {
                 divider.setVisibility(View.VISIBLE);
                 textView_name.setVisibility(View.GONE);

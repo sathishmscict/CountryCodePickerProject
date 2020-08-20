@@ -76,6 +76,7 @@ class FullNumberFragment: Fragment() {
 	private fun registerCarrierEditText() {
 		ccpLoadNumber.registerCarrierNumberEditText(editTextLoadCarrierNumber)
 		ccpGetNumber.registerCarrierNumberEditText(editTextGetCarrierNumber)
+
 		ccpGetNumber.setPhoneNumberValidityChangeListener { isValidNumber ->
 			if (isValidNumber) {
 				imgValidity.setImageDrawable(getDrawable(context!!, R.drawable.ic_assignment_turned_in_black_24dp))
