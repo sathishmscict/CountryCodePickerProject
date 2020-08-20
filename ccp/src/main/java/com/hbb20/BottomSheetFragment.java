@@ -1,15 +1,12 @@
 package com.hbb20;
 
-import android.app.Activity;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -19,12 +16,8 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,14 +28,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.futuremind.recyclerviewfastscroll.FastScroller;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.List;
-
-import io.michaelrocks.libphonenumber.android.NumberParseException;
-import io.michaelrocks.libphonenumber.android.PhoneNumberUtil;
-import io.michaelrocks.libphonenumber.android.Phonenumber;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment implements CountrySearchListener {
     private EditText editText_search;
@@ -50,9 +38,7 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Co
     private ImageView imgClearQuery;
     private RecyclerView recyclerView_countryDialog;
     private CountryCodeAdapterNew ccAdapter;
-    private RelativeLayout rlContainer;
     private TextView tvNoResult;
-    private CCPCountry selectedCountry;
     private CountrySelectListener countrySelectListener;
 
 
@@ -89,19 +75,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Co
         });
     }
 
-    /*@NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override public void onShow(DialogInterface dialogInterface) {
-                BottomSheetDialog bottomSheetDialog = (BottomSheetDialog) dialogInterface;
-                setupFullHeight(bottomSheetDialog);
-            }
-        });
-        return  dialog;
-    }*/
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -113,12 +86,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Co
         editText_search = (EditText) rootView.findViewById(R.id.editText_search);
         imgClearQuery = (ImageView) rootView.findViewById(R.id.img_clear_query);
         recyclerView_countryDialog = (RecyclerView) rootView.findViewById(R.id.recycler_countryDialog);
-        rlContainer = (RelativeLayout) rootView.findViewById(R.id.rlContainer);
         tvNoResult = (TextView) rootView.findViewById(R.id.textView_noresult);
 
-
         editText_search.requestFocus();
-
 
         setQueryClearListener();
         setTextWatcher();
@@ -156,15 +126,16 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Co
 
                 @Override
                 public void afterTextChanged(Editable s) {
+                    Log.d("setTextWatcher","beforeTextChanged called");
                 }
 
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    Log.d("setTextWatcher","beforeTextChanged called");
                 }
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    //TODO: here perform operation on adapter
                     ccAdapter.applyQuery(s.toString());
                     if (s.toString().trim().equals("")) {
                         imgClearQuery.setVisibility(View.GONE);
@@ -224,27 +195,19 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Co
     @Override
     public void noSearchResult() {
         tvNoResult.setVisibility(View.VISIBLE);
-        //rlContainer.setVisibility(View.GONE);
     }
 
     @Override
     public void showCountryContainer() {
         tvNoResult.setVisibility(View.GONE);
-        //rlContainer.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showCountryContainer(CCPCountry ccpCountry) {
-        this.selectedCountry = ccpCountry;
         if (countrySelectListener != null) {
             countrySelectListener.getSelectedCountry(ccpCountry);
         }
-        //manageKeyboard(false);
-        //hideKeyboard(getActivity());
-
-        ///View view = editText_search.getCurrentFocus();
         hideKeyboard();
-
         dismiss();
     }
 
@@ -252,13 +215,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Co
     public void onCancel(@NonNull DialogInterface dialog) {
         hideKeyboard();
         super.onCancel(dialog);
-
-        //Toast.makeText(getActivity(), "Cancel called", Toast.LENGTH_SHORT).show();
     }
-
-    public CCPCountry getSelectedCountry() {
-        return selectedCountry;
-    }
-
 
 }
