@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.futuremind.recyclerviewfastscroll.SectionTitleProvider;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -237,7 +238,12 @@ class CountryCodeAdapterNew extends RecyclerView.Adapter<CountryCodeAdapterNew.C
                 /*}*/
 
                 textView_name.setText(countryName);
-                textView_code.setText("+" + ccpCountry.getPhoneCode());
+                if(ccpCountry.getFullPhoneCode()==null || ccpCountry.getFullPhoneCode().isEmpty()){
+                    textView_code.setText("+" + ccpCountry.getPhoneCode());
+                }else{
+                    textView_code.setText("+" + ccpCountry.getFullPhoneCode());
+                }
+
 
                 /*if (!codePicker.getCcpDialogShowFlag() || codePicker.ccpUseEmoji) {*/
                     //linearFlagHolder.setVisibility(View.GONE);

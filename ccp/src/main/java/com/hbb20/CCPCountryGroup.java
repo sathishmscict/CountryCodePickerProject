@@ -13,7 +13,7 @@ public class CCPCountryGroup {
     private static SparseArray<CCPCountryGroup> countryGroups = null;
     String defaultNameCode;
     int areaCodeLength;
-    private HashMap<String, String> nameCodeToAreaCodesMap;
+     HashMap<String, String> nameCodeToAreaCodesMap;
 
     private CCPCountryGroup(String defaultNameCode, int areaCodeLength, HashMap<String, String> nameCodeToAreaCodesMap) {
         this.defaultNameCode = defaultNameCode;

@@ -296,7 +296,7 @@ public class CountryCodePicker extends RelativeLayout {
             detectCountryWithAreaCode = a.getBoolean(R.styleable.CountryCodePicker_ccp_areaCodeDetectedCountry, true);
 
             //show bottom sheet
-            showBottomSheetPicker = a.getBoolean(R.styleable.CountryCodePicker_ccp_show_bottom_sheet_picker, true);
+            showBottomSheetPicker = a.getBoolean(R.styleable.CountryCodePicker_ccp_show_bottom_sheet_picker, false);
 
             //remember last selection
             rememberLastSelection = a.getBoolean(R.styleable.CountryCodePicker_ccp_rememberLastSelection, false);
@@ -790,6 +790,14 @@ public class CountryCodePicker extends RelativeLayout {
         return selectedCCPCountry;
     }
 
+   String getCustomPhoneCode(CCPCountry selectedCCPCountry){
+        if(selectedCCPCountry.getFullPhoneCode()==null || selectedCCPCountry.getFullPhoneCode().isEmpty()){
+            return selectedCCPCountry.getPhoneCode();
+        }else{
+            return selectedCCPCountry.getFullPhoneCode();
+        }
+    }
+
     void setSelectedCountry(CCPCountry selectedCCPCountry) {
 
         //force disable area code country detection
@@ -843,14 +851,16 @@ public class CountryCodePicker extends RelativeLayout {
             if (displayText.length() > 0) {
                 displayText += "  ";
             }
-            displayText += "+" + selectedCCPCountry.getPhoneCode();
+            //displayText += "+" + selectedCCPCountry.getPhoneCode();
+            displayText += "+" + getCustomPhoneCode(selectedCCPCountry);
         }
 
         textView_selectedCountry.setText(displayText);
 
         //avoid blank state of ccp
         if (showFlag == false && displayText.length() == 0) {
-            displayText += "+" + selectedCCPCountry.getPhoneCode();
+            //displayText += "+" + selectedCCPCountry.getPhoneCode();
+            displayText += "+" + getCustomPhoneCode(selectedCCPCountry);
             textView_selectedCountry.setText(displayText);
         }
 

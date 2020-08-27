@@ -67,7 +67,9 @@
                             app:ccp_contentColor="@color/colorBlue"
                             app:ccp_show_bottom_sheet_picker="true"
                             app:ccpDialog_keyboardAutoPopup="false"
+                            app:ccp_areaCodeDetectedCountry="false"
                             app:ccp_autoDetectCountry="true"
+                            app:ccp_rememberLastSelection="true"
                             android:layout_height="wrap_content" />
 
                         <!--<com.hbb20.CountryCodePicker
