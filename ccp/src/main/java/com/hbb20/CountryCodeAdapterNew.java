@@ -146,8 +146,7 @@ class CountryCodeAdapterNew extends RecyclerView.Adapter<CountryCodeAdapterNew.C
     @Override
     public CountryCodeViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View rootView = inflater.inflate(R.layout.layout_recycler_country_tile, viewGroup, false);
-        CountryCodeViewHolder viewHolder = new CountryCodeViewHolder(rootView);
-        return viewHolder;
+        return new CountryCodeViewHolder(rootView);
     }
 
     @Override
@@ -158,17 +157,11 @@ class CountryCodeAdapterNew extends RecyclerView.Adapter<CountryCodeAdapterNew.C
                 @Override
                 public void onClick(View view) {
                     if (filteredCountries != null && filteredCountries.size() > i) {
-                        //Toast.makeText(context,"Clicked on ",Toast.LENGTH_SHORT).show();
-                        //TODO ; need to add callback pass data to activity
-                        //codePicker.onUserTappedCountry(filteredCountries.get(i));
                         countrySearchListener.showCountryContainer(filteredCountries.get(i));
                     }
                     if (view != null && filteredCountries != null && filteredCountries.size() > i && filteredCountries.get(i) != null) {
                         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                        //Toast.makeText(context,"Clicked on dismiss",Toast.LENGTH_SHORT).show();
-                        //TODO ; need to add callback dismiss dialogsheet
-                        //dialog.dismiss();
                     }
                 }
             });

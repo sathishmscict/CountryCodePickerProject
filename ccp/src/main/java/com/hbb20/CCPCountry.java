@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -1464,7 +1465,7 @@ public class CCPCountry implements Comparable<CCPCountry> {
         countries.add(new CCPCountry("bz", "501", "Belize", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("ca", "1", "Canada", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("cc", "61", "Cocos (keeling) Islands", DEFAULT_FLAG_RES));
-        countries.add(new CCPCountry("cd", "243", "Congo, The Democratic Republic Of The", DEFAULT_FLAG_RES));
+        countries.add(new CCPCountry("cd", "243", "Congo, The Democratic Republic Of The Congo", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("cf", "236", "Central African Republic", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("cg", "242", "Congo", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("ch", "41", "Switzerland", DEFAULT_FLAG_RES));
@@ -1495,7 +1496,7 @@ public class CCPCountry implements Comparable<CCPCountry> {
         countries.add(new CCPCountry("fi", "358", "Finland", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("fj", "679", "Fiji", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("fk", "500", "Falkland Islands (malvinas)", DEFAULT_FLAG_RES));
-        countries.add(new CCPCountry("fm", "691", "Micronesia, Federated States Of", DEFAULT_FLAG_RES));
+        countries.add(new CCPCountry("fm", "691", "Micronesia, Federated States Of Micronesia", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("fo", "298", "Faroe Islands", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("fr", "33", "France", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("ga", "241", "Gabon", DEFAULT_FLAG_RES));
@@ -1528,7 +1529,7 @@ public class CCPCountry implements Comparable<CCPCountry> {
         countries.add(new CCPCountry("in", "91", "India", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("io", "246", "British Indian Ocean Territory", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("iq", "964", "Iraq", DEFAULT_FLAG_RES));
-        countries.add(new CCPCountry("ir", "98", "Iran, Islamic Republic Of", DEFAULT_FLAG_RES));
+        countries.add(new CCPCountry("ir", "98", "Iran, Islamic Republic Of Persian Gulf", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("it", "39", "Italy", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("je", "44", "Jersey ", DEFAULT_FLAG_RES));
         countries.add(new CCPCountry("jm", "1", "Jamaica", DEFAULT_FLAG_RES,"1876"));
@@ -1670,8 +1671,11 @@ public class CCPCountry implements Comparable<CCPCountry> {
         countries.add(new CCPCountry("zw", "263", "Zimbabwe", DEFAULT_FLAG_RES));
 
        // updatePlusOneCountriesFullCountryCode(countries);
+        Collections.sort(countries);
         return countries;
     }
+
+
 
     //Get country code with 1 and set additional area code
     private static void updatePlusOneCountriesFullCountryCode(List<CCPCountry> countries) {

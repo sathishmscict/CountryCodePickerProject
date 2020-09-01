@@ -5,30 +5,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:clickable="true">
 
-
     <TextView
         android:id="@+id/textView_countryName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
         android:layout_marginStart="@dimen/google_1x"
         android:layout_marginLeft="@dimen/google_1x"
         android:gravity="center_vertical"
-        android:text="India (IN)"
-        android:textSize="12sp"
+        android:text="India (IN) India (IN)India (IN)India (IN)India (IN)India fdfddd1"
+        android:layout_toLeftOf="@+id/linear_flag_holder"
         android:textColor="@android:color/secondary_text_light" />
+
     <LinearLayout
         android:id="@+id/linear_flag_holder"
         android:layout_width="25dp"
+        android:layout_toLeftOf="@+id/textView_code"
         android:layout_height="50dp"
-        android:layout_toRightOf="@+id/textView_countryName"
-        android:layout_marginLeft="@dimen/google_1x"
         android:layout_marginStart="@dimen/google_1x"
         tools:visibility="visible"
         android:visibility="visible"
         android:gravity="center">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image_flag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,19 +41,17 @@
         android:id="@+id/textView_code"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_toRightOf="@+id/linear_flag_holder"
-        android:textSize="12sp"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:gravity="center_vertical"
-        android:paddingEnd="10dp"
+        android:gravity="start|center"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:paddingStart="10dp"
-        android:text="+91"
+        android:text="+9123"
+        android:minWidth="50dp"
         android:textColor="@android:color/secondary_text_light"
         android:textDirection="ltr" />
+
     <View
         android:id="@+id/preferenceDivider"
         android:layout_width="match_parent"
