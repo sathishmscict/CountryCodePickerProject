@@ -18,7 +18,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -41,10 +40,11 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Co
     private CountryCodeAdapterNew ccAdapter;
     private TextView tvNoResult;
     private CountrySelectListener countrySelectListener;
+    private String selectedCountryName;
 
-
-    public BottomSheetFragment(CountrySelectListener _countrySelectListener) {
+    public BottomSheetFragment(String _selectedCountryName,CountrySelectListener _countrySelectListener) {
         this.countrySelectListener = _countrySelectListener;
+        this.selectedCountryName = _selectedCountryName;
     }
 
     @Override
@@ -163,7 +163,8 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Co
 
     private void setupCountryDataToRecyclerView() {
         List<CCPCountry> masterCountries = CCPCountry.getLibraryMasterCountriesEnglish();
-        ccAdapter = new CountryCodeAdapterNew(getActivity(), this, masterCountries);
+
+        ccAdapter = new CountryCodeAdapterNew(getActivity(), this, masterCountries,selectedCountryName);
         recyclerView_countryDialog.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView_countryDialog.setAdapter(ccAdapter);
     }

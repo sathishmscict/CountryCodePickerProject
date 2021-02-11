@@ -6,5 +6,13 @@
     <color name="pressed_bg">#64b7b7b7</color>
     <color name="colorBlue">#007aff</color>
     <color name="colorGrey">#ececed</color>
+    <color name="colorCcpDefault">#D2D3D9</color>
+    <color name="colorCcpSelected">#0045FF</color>
+    <color name="colorPrimary950ccp">#030353</color>
+    <color name="colorCircleShape">#D3D4DA</color>
+    <color name="colorCircleShapeInner">#EDEEEF</color>
+
     <color name="colorWhite">#ffffff</color>
+    <color name="colorPrimaryBack">#575890</color>
+    <color name="colorScreenBgCcp">#F3F3F3</color>
 </resources>

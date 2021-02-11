@@ -13,25 +13,57 @@
         android:id="@+id/rootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/transparent"
         android:orientation="vertical"
         android:padding="0dp">
         <!--app:behavior_hideable="false"
         app:behavior_peekHeight="500dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_8sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:src="@drawable/icon_back_ccp"
+                android:tint="@color/colorPrimary950ccp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/str_country_code"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorPrimary950ccp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
         <RelativeLayout
             android:id="@+id/rl_query_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_title"
-            android:layout_margin="10dp"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
             android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/search_background"
-                android:padding="4dp">
+                android:padding="@dimen/_5sdp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/img_search"
@@ -39,7 +71,7 @@
                     android:layout_height="24dp"
                     android:layout_centerVertical="true"
                     android:padding="4dp"
-                    app:srcCompat="@drawable/icon_search" />
+                    app:srcCompat="@drawable/icon_search_ccp" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/editText_search"
@@ -52,6 +84,9 @@
                     android:gravity="center|left"
                     android:imeOptions="actionSearch"
                     android:singleLine="true"
+                    android:hint="@string/str_search"
+                    android:textColorHint="@color/colorPrimaryBack"
+                    android:textColor="@color/colorPrimaryBack"
                     android:text=""
                     android:textCursorDrawable="@null" />
 
@@ -97,6 +132,9 @@
                 android:layout_alignEnd="@+id/recycler_countryDialog"
                 android:layout_alignRight="@+id/recycler_countryDialog"
                 android:layout_alignBottom="@+id/recycler_countryDialog"
+                app:fastscroll__bubbleColor="@color/colorPrimaryBack"
+                app:fastscroll__handleColor="@color/colorPrimaryBack"
+                app:fastscroll__bubbleTextAppearance="@style/StyledScrollerTextAppearance"
                 android:orientation="vertical" />
         </RelativeLayout>
     </LinearLayout>

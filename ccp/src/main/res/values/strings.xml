@@ -2,4 +2,6 @@
     <string name="search_hint">Search…</string>
     <string name="no_result_found">Results not found</string>
     <string name="select_country">Select a country</string>
+    <string name="str_country_code">Country code</string>
+    <string name="str_search">Search</string>
 </resources>

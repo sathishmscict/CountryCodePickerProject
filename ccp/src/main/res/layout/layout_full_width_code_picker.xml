@@ -14,8 +14,6 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/ccp_padding">
 
-
-
         <!--</LinearLayout>-->
         <TextView
             android:id="@+id/textView_selectedCountry"

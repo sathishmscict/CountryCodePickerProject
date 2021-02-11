@@ -5,7 +5,9 @@ import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
+import android.telephony.TelephonyManager
 import android.util.Log
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,8 @@ import androidx.fragment.app.Fragment
 import com.hbb20.*
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import io.michaelrocks.libphonenumber.android.Phonenumber.PhoneNumber
+import leakcanary.CanaryLog.d
+import java.util.*
 
 
 /**
@@ -24,7 +28,6 @@ import io.michaelrocks.libphonenumber.android.Phonenumber.PhoneNumber
 
 
 class IntroductionFragment : Fragment() {
-
 
     private lateinit var buttonGo: Button
     private lateinit var llCcp: LinearLayout
@@ -36,9 +39,29 @@ class IntroductionFragment : Fragment() {
     lateinit var phoneUtil: PhoneNumberUtil
      var selectedCountry: CCPCountry? = null
 
+    lateinit var selectedCountryName: String
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_introduction, container, false)
+    }
+
+    fun getUserCountry(context: Context): String? {
+        try {
+            val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+            val simCountry = tm.simCountryIso
+            if (simCountry != null && simCountry.length == 2) { // SIM country code is available
+                return simCountry.toLowerCase(Locale.US)
+            }
+            else if (tm.phoneType != TelephonyManager.PHONE_TYPE_CDMA) { // Device is not 3G (would be unreliable)
+                val networkCountry = tm.networkCountryIso
+                if (networkCountry != null && networkCountry.length == 2) { // network country code is available
+                    return networkCountry.toLowerCase(Locale.US)
+                }
+            }
+        }
+        catch (e: Exception) {
+        }
+        return null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,7 +72,10 @@ class IntroductionFragment : Fragment() {
 
         activity?.let {
             phoneUtil = PhoneNumberUtil.createInstance(it);
+            val countryRegionCode = getUserCountry(it)
+            Log.d("CCP","countryRegionCode : $countryRegionCode")
         }
+
 
         //dataBinding.ccp.registerCarrierNumberEditText(dataBinding.edtPhoneNumber)
 
@@ -80,7 +106,12 @@ class IntroductionFragment : Fragment() {
                 tvIntro.performClick()
             }
         });
+        selectedCountryName = ccpDemo.defaultCountryName
 
+
+        //ccpDemo.setDefaultCountryUsingNameCode("IN")
+        Log.d("CCP code","${ccpDemo.defaultCountryCodeWithPlus}" )
+        Log.d("CCP code","${ccpDemo.defaultCountryCode}" )
 
 
        /* llCcp.setOnTouchListener(OnTouchListener { v, event ->
@@ -136,9 +167,13 @@ class IntroductionFragment : Fragment() {
 
         tvIntro.setOnClickListener {
             try {
-                val bottomSheetFragment = BottomSheetFragment(object : CountrySelectListener {
+                val bottomSheetFragment = BottomSheetFragment(selectedCountryName,object : CountrySelectListener {
                     override fun getSelectedCountry(ccpCountry: CCPCountry?) {
                         selectedCountry = ccpCountry
+                        ccpCountry?.name?.let {
+                            selectedCountryName =   it
+                        }
+
                         Log.d("DATA name", "${ccpCountry?.name}")
                         Log.d("DATA nameCode", "${ccpCountry?.nameCode}")
                         Log.d("DATA phoneCode", "${ccpCountry?.phoneCode}")
@@ -150,13 +185,18 @@ class IntroductionFragment : Fragment() {
                         }*/
 
                         ccpDemo.onUserTappedCountry(selectedCountry)
+
+                        selectedCountry?.let {
+                            Log.d("fullPhoneCode","${it.fullPhoneCode}")
+                            Log.d("nameCode ","${it.nameCode }")
+                            //viewModel.saveCountryCode(it.fullPhoneCode, it.nameCode )
+                        }
                         updateHint()
                         Toast.makeText(activity, "data : ${ccpCountry?.name}", Toast.LENGTH_SHORT).show()
                     }
                 })
                 activity?.let {
                     bottomSheetFragment.show(it.supportFragmentManager, bottomSheetFragment.tag)
-
                 }
 
             } catch (e: Exception) {
@@ -180,6 +220,7 @@ class IntroductionFragment : Fragment() {
         //countryCodePicker.ccpDialogShowFlag = false;
         //countryCodePicker.ccpDialogShowFlag = false;
         //countryCodePicker.ccpDialogShowTitle = false;
+        
         countryCodePicker.registerCarrierNumberEditText(etPhone)
     }
 

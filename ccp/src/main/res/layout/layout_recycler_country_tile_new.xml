@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingBottom="@dimen/_3sdp">
+
+    <!--<LinearLayout
+        android:id="@+id/linear_flag_holder"
+        android:layout_width="25dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/google_1x"
+        tools:visibility="visible"
+        android:visibility="visible"
+        android:gravity="center">-->
+
+    <com.github.florent37.shapeofview.shapes.CircleView
+        android:id="@+id/cvCountry"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:visibility="visible"
+        app:shape_circle_borderColor="@color/colorCircleShape"
+        app:shape_circle_borderWidth="@dimen/_2sdp"
+        tools:visibility="visible">
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_flag"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/_4sdp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/rounded_shape_bg_ccp"
+                    android:padding="@dimen/_9sdp"
+                    tools:src="@drawable/flag_india" />
+            </LinearLayout>
+
+
+    </com.github.florent37.shapeofview.shapes.CircleView>
+
+
+    <!--</LinearLayout>-->
+
+    <TextView
+        android:id="@+id/textView_countryName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/google_1x"
+        android:layout_marginLeft="@dimen/google_1x"
+        android:layout_toLeftOf="@+id/linear_flag_holder"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="India (IN) India (IN)India (IN)India (IN)India (IN)India fdfddd1"
+        android:textColor="@color/colorPrimary950ccp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivStatus"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_4sdp"
+        android:src="@drawable/icon_country_selected" />
+
+
+    <TextView
+        android:id="@+id/textView_code"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="8dp"
+        android:gravity="start|center"
+        android:minWidth="50dp"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:text="+9123"
+        android:textColor="@android:color/secondary_text_light"
+        android:textDirection="ltr"
+        android:visibility="gone" />
+
+    <!-- <View
+         android:id="@+id/preferenceDivider"
+         android:layout_width="match_parent"
+         android:layout_height="2dp"
+         android:layout_alignParentTop="true"
+         android:layout_marginLeft="5dp"
+         android:layout_marginRight="5dp"
+         android:alpha="0.2"
+         android:background="#898989" />
+ -->
+
+
+</LinearLayout>
