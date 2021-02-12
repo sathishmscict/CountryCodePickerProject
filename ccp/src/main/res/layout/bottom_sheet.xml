@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/design_bottom_sheet"
     style="?attr/bottomSheetStyle"
     android:layout_width="match_parent"
@@ -122,6 +123,7 @@
                 android:id="@+id/recycler_countryDialog"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                tools:listitem="@layout/layout_recycler_country_tile_new"
                 android:dividerHeight="2dp" />
 
             <com.futuremind.recyclerviewfastscroll.FastScroller

@@ -35,7 +35,7 @@ import java.util.List;
 public class BottomSheetFragment extends BottomSheetDialogFragment implements CountrySearchListener {
     private EditText editText_search;
     private View rootView;
-    private ImageView imgClearQuery;
+    private ImageView imgClearQuery,ivBack;
     private RecyclerView recyclerView_countryDialog;
     private CountryCodeAdapterNew ccAdapter;
     private TextView tvNoResult;
@@ -88,6 +88,14 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Co
         imgClearQuery = (ImageView) rootView.findViewById(R.id.img_clear_query);
         recyclerView_countryDialog = (RecyclerView) rootView.findViewById(R.id.recycler_countryDialog);
         tvNoResult = (TextView) rootView.findViewById(R.id.textView_noresult);
+        ivBack  = (ImageView)rootView.findViewById(R.id.ivBack);
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
 
         editText_search.requestFocus();
 

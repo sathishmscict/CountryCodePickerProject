@@ -70,7 +70,9 @@
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_14sdp"
         android:padding="@dimen/_4sdp"
+        tools:visibility="visible"
         android:src="@drawable/icon_country_selected" />
 
 
