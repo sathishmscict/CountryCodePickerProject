@@ -8,6 +8,7 @@ import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Build;
+import android.os.Handler;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
@@ -139,6 +140,8 @@ public class CountryCodePicker extends RelativeLayout {
         @Override
         public void onClick(View v) {
 
+            v.setEnabled(false);
+
             if(showBottomSheetPicker){
                 cppClickListeners.openBottomSheet();
             }else{
@@ -154,6 +157,7 @@ public class CountryCodePicker extends RelativeLayout {
                     customClickListener.onClick(v);
                 }
             }
+            new Handler().postDelayed(() -> v.setEnabled(true), 500);
 
 
 

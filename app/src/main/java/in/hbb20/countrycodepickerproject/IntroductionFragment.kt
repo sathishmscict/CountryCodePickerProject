@@ -6,6 +6,8 @@ import android.os.Build
 import android.os.Bundle
 import android.telephony.PhoneNumberUtils
 import android.telephony.TelephonyManager
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.Log.d
 import android.view.LayoutInflater
@@ -16,6 +18,7 @@ import android.widget.*
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.hbb20.*
+import io.michaelrocks.libphonenumber.android.NumberParseException
 import io.michaelrocks.libphonenumber.android.PhoneNumberUtil
 import io.michaelrocks.libphonenumber.android.Phonenumber.PhoneNumber
 import leakcanary.CanaryLog.d
@@ -127,7 +130,7 @@ class IntroductionFragment : Fragment() {
             tvIntro.performClick()
         })*/
 
-        /*edtMobileNo.addTextChangedListener(object : TextWatcher {
+       /* edtMobileNo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
